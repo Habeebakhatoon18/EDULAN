@@ -241,3 +241,13 @@ edulingua-ai/
 2. Follow lint/format rules
 3. Add tests
 4. PR with clear description & screenshots
+
+
+
+## Authors and acknowledgment
+Show your appreciation to those who have contributed to the project.
+
+##License
+For open source projects, say how it is licensed.
+
+
