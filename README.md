@@ -1,107 +1,243 @@
-# React
 
-A modern React-based project utilizing the latest frontend technologies and tools for building responsive web applications.
+# EduLingua AI — Learn in Your Language 🎓🌏
 
-## 🚀 Features
+An end-to-end, AI-powered educational translation platform for India and beyond. Translate **text, audio, and video** into local languages with downloadable subtitles, transcripts, and audio. Includes **Educator & Student dashboards**, **school integration API**, and a delightful, responsive UI.
 
-- **React 18** - React version with improved rendering and concurrent features
-- **Vite** - Lightning-fast build tool and development server
-- **Redux Toolkit** - State management with simplified Redux setup
-- **TailwindCSS** - Utility-first CSS framework with extensive customization
-- **React Router v6** - Declarative routing for React applications
-- **Data Visualization** - Integrated D3.js and Recharts for powerful data visualization
-- **Form Management** - React Hook Form for efficient form handling
-- **Animation** - Framer Motion for smooth UI animations
-- **Testing** - Jest and React Testing Library setup
+---
 
-## 📋 Prerequisites
+## ✨ Highlights
 
-- Node.js (v14.x or higher)
-- npm or yarn
+- **Text Translation**: Paste/upload **TXT/PDF/DOCX** → instant translation.
+- **Video Translation**: Upload file or paste URL → transcribe → translate → **add subtitles** → download `.srt`, `.vtt`, transcript, or processed video.
+- **Speech-to-Text Translation**: Upload audio → transcript + translation.
+- **Offline Downloads**: Text, subtitles, and audio.
+- **User Accounts**: Educator/Student portals with saved history.
+- **School API**: API keys for direct LMS integration.
+- **Optimized UX**: Lazy-load assets, CDN, minified bundles.
 
-## 🛠️ Installation
+---
 
-1. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-   
-2. Start the development server:
-   ```bash
-   npm start
-   # or
-   yarn start
-   ```
+## 🧭 Table of Contents
 
-## 📁 Project Structure
+- [Demo](#demo)
+- [Screens & UX](#screens--ux)
+- [Architecture](#architecture)
+- [Tech Stack](#tech-stack)
+- [Local Setup](#local-setup)
+- [Environment Variables](#environment-variables)
+- [Run & Dev Scripts](#run--dev-scripts)
+- [API Reference](#api-reference)
+- [Processing Pipelines](#processing-pipelines)
+- [Security & Compliance](#security--compliance)
+- [Performance Tips](#performance-tips)
+- [Project Structure](#project-structure)
+- [Deployment](#deployment)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Demo
+
+> Ships with mock translations so you can click around immediately after setup.
+
+- Instant translate demo
+- Video with subtitle toggle
+- Side-by-side before/after slider
+- Educator bulk translation
+- Student search/download
+
+---
+
+## Screens & UX
+
+- **Theme**: Pastel gradients (peach→lavender, aqua→yellow) + glassmorphism cards.
+- **Animations**: Fade-ins, floating blobs, typing language effect, cursor glow.
+- **Pages**:
+  - Landing / Hero
+  - Languages (interactive India map)
+  - Features (text/audio/video)
+  - Demo
+  - Educator Dashboard
+  - Student Dashboard
+  - Testimonials & Impact
+  - Footer with gradient border and neon hover icons
+
+---
+
+## Architecture
 
 ```
-react_app/
-├── public/             # Static assets
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/          # Page components
-│   ├── styles/         # Global styles and Tailwind configuration
-│   ├── App.jsx         # Main application component
-│   ├── Routes.jsx      # Application routes
-│   └── index.jsx       # Application entry point
-├── .env                # Environment variables
-├── index.html          # HTML template
-├── package.json        # Project dependencies and scripts
-├── tailwind.config.js  # Tailwind CSS configuration
-└── vite.config.js      # Vite configuration
-```
 
-## 🧩 Adding Routes
+Frontend (React/HTML/CSS/JS, GSAP)
+↕ HTTPS (JWT)
+Backend (Node.js + Express)
+↔ MongoDB
+↔ AI APIs
+\- Translation: Google Cloud / OpenAI GPT-4o
+\- Transcription: OpenAI Whisper
+↔ FFmpeg (video/audio processing)
+↔ Object Storage/CDN
 
-To add new routes to the application, update the `Routes.jsx` file:
+````
 
-```jsx
-import { useRoutes } from "react-router-dom";
-import HomePage from "pages/HomePage";
-import AboutPage from "pages/AboutPage";
+---
 
-const ProjectRoutes = () => {
-  let element = useRoutes([
-    { path: "/", element: <HomePage /> },
-    { path: "/about", element: <AboutPage /> },
-    // Add more routes as needed
-  ]);
+## Tech Stack
 
-  return element;
-};
-```
+**Frontend**: HTML, CSS, JavaScript (React optional), GSAP  
+**Backend**: Node.js, Express, MongoDB, Multer, FFmpeg  
+**AI**: Google Cloud Translation or OpenAI GPT-4o; Whisper for ASR  
+**Auth**: JWT authentication  
+**Deploy**: Vercel/Netlify (frontend), Render/Heroku (backend)
 
-## 🎨 Styling
+---
 
-This project uses Tailwind CSS for styling. The configuration includes:
-
-- Forms plugin for form styling
-- Typography plugin for text styling
-- Aspect ratio plugin for responsive elements
-- Container queries for component-specific responsive design
-- Fluid typography for responsive text
-- Animation utilities
-
-## 📱 Responsive Design
-
-The app is built with responsive design using Tailwind CSS breakpoints.
-
-
-## 📦 Deployment
-
-Build the application for production:
+## Local Setup
 
 ```bash
-npm run build
+git clone https://github.com/<your-org>/edulingua-ai.git
+cd edulingua-ai
+npm install
+````
+
+Install **FFmpeg** and ensure it’s on your `PATH`:
+
+```bash
+ffmpeg -version
 ```
 
-## 🙏 Acknowledgments
+---
 
-- Built with [Rocket.new](https://rocket.new)
-- Powered by React and Vite
-- Styled with Tailwind CSS
+## Environment Variables
 
-Built with ❤️ on Rocket.new
+Create `.env` (never commit it):
+
+```ini
+NODE_ENV=development
+PORT=5000
+CLIENT_URL=http://localhost:5173
+
+MONGODB_URI=mongodb://127.0.0.1:27017/edulingua_ai
+
+JWT_SECRET=replace_with_strong_secret
+JWT_REFRESH_SECRET=replace_with_stronger_secret
+
+OPENAI_API_KEY=sk-...
+GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/key.json
+
+UPLOAD_DIR=./uploads
+```
+
+Add to `.gitignore`:
+
+```bash
+.env
+**/.env
+```
+
+---
+
+## Run & Dev Scripts
+
+```bash
+# Backend
+npm run dev:server
+
+# Frontend
+npm run dev:client
+```
+
+---
+
+## API Reference
+
+**Base URL**: `https://<backend-domain>/api`
+
+**Auth**
+
+* `POST /auth/signup`
+* `POST /auth/login`
+* `POST /auth/refresh`
+* `POST /auth/logout`
+
+**Translation**
+
+* `POST /translate/text`
+* `POST /translate/audio`
+* `POST /translate/video`
+
+**Resources**
+
+* `GET /resources/search`
+* `POST /resources`
+
+---
+
+## Processing Pipelines
+
+* **Text** → translate → return text + file
+* **Audio** → Whisper → translate → generate subtitles/audio
+* **Video** → Whisper → translate → create `.srt`/`.vtt` → optional burn-in with FFmpeg
+
+---
+
+## Security & Compliance
+
+* No secrets in repo
+* JWT with rotation
+* File size/MIME checks
+* Rate limiting
+
+---
+
+## Performance Tips
+
+* Compress uploads
+* Lazy-load heavy UI
+* CDN for static assets
+* Preload fonts/gradients
+
+---
+
+## Project Structure
+
+```plaintext
+edulingua-ai/
+├─ client/
+│  ├─ public/
+│  └─ src/
+├─ server/
+│  ├─ src/
+│  ├─ uploads/ (gitignored)
+│  └─ .env
+├─ .gitignore
+└─ README.md
+```
+
+---
+
+## Deployment
+
+* **Frontend**: Vercel / Netlify
+* **Backend**: Render / Heroku / Fly.io + MongoDB Atlas + FFmpeg buildpack
+
+---
+
+## Roadmap
+
+* [ ] Text-to-Speech output
+* [ ] Batch class jobs
+* [ ] Admin analytics
+* [ ] Accessibility audit
+* [ ] PWA offline mode
+
+---
+
+## Contributing
+
+1. Fork & branch
+2. Follow lint/format rules
+3. Add tests
+4. PR with clear description & screenshots
