@@ -70,7 +70,7 @@ An end-to-end, AI-powered educational translation platform for India and beyond.
 
 ```
 
-Frontend (React/HTML/CSS/JS, GSAP)
+Frontend (React, GSAP)
 ↕ HTTPS (JWT)
 Backend (Node.js + Express)
 ↔ MongoDB
@@ -86,7 +86,7 @@ Backend (Node.js + Express)
 
 ## Tech Stack
 
-**Frontend**: HTML, CSS, JavaScript (React optional), GSAP  
+**Frontend**: React , GSAP  
 **Backend**: Node.js, Express, MongoDB, Multer, FFmpeg  
 **AI**: Google Cloud Translation or OpenAI GPT-4o; Whisper for ASR  
 **Auth**: JWT authentication  
